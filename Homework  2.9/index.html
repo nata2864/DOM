@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Проект "Комменты"</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <ul class="comments" id="list" >
+        <li class="comment">
+          <div class="comment-header">
+            <div>Глеб Фокин</div>
+            <div>12.02.22 12:18</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+              Это будет первый комментарий на этой странице
+            </div>
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">3</span>
+              <button class="like-button"></button>
+            </div>
+          </div>
+        </li>
+        <li class="comment">
+          <div class="comment-header">
+            <div>Варвара Н.</div>
+            <div>13.02.22 19:22</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+              Мне нравится как оформлена эта страница! ❤
+            </div>
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">75</span>
+              <button class="like-button -active-like"></button>
+            </div>
+          </div>
+        </li>    
+      </ul>
+
+
+      <div class="add-form">
+        <input id="name-input"
+          type="text"
+          class="add-form-name"
+          placeholder="Введите ваше имя"
+        />
+        <textarea id="comments-input"
+          type="textarea"
+          class="add-form-text"
+          placeholder="Введите ваш коментарий"
+          rows="4"
+        >
+        </textarea>
+        <div class="add-form-row">
+          <button id="add-button" class="add-form-button" >Написать</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <style>
+    .error {
+      background-color: #dfd02f;
+    }
+  </style>
+  <script>
+  
+    // Код писать здесь
+    const buttonElement = document.getElementById('add-button');
+    const listElement = document.getElementById("list");
+    const nameInputElement = document.getElementById ("name-input");
+    const commentsInputElement = document.getElementById ("comments-input");
+
+    console.log (nameInputElement.type);
+
+
+    buttonElement.addEventListener("click", () => {
+
+      nameInputElement.classList.remove ('error');
+      commentsInputElement.classList.remove ('error');
+
+        if (nameInputElement.value === "" || commentsInputElement.value === "") {
+        nameInputElement.classList.add ('error');
+        commentsInputElement.classList.add ('error');
+        return;
+      };
+
+
+let myDate = new Date();
+
+let year = myDate.getFullYear().toString ().slice (-2);
+
+let month = (myDate.getMonth() + 1);
+
+let day = myDate.getDate();
+
+
+let hour = myDate.getHours(); // получаем час из нашей даты
+let minute = myDate.getMinutes(); // получаем минуты
+let second = myDate.getSeconds(); // получаем секунды
+
+
+if (minute < 10) { // если минут будет меньше 10,
+	minute = "0" + minute; // то перед ними поставим 0
+}
+if (hour < 10) { // если секунд будет меньше 10,
+  hour = "0" + hour;
+}
+ 
+if (day < 10) {
+  day = "0" + day;
+}
+  
+if (month < 10) {
+  month = "0" + month; 
+}
+
+let fullDate = day + "." + month + "." + year + " "+ hour + ":" + minute;
+
+
+      
+      
+      
+      const oldListHtml = listElement.innerHTML;
+      
+      listElement.innerHTML =  oldListHtml + `<li class="comment">
+          <div class="comment-header">
+            <div>  ${nameInputElement.value} </div>
+            <div> ${fullDate}</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+              ${commentsInputElement.value}
+            </div>
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">0</span>
+              <button class="like-button"></button>
+            </div>
+          </div>
+        </li>`;
+
+    });  
+      
+  </script>
+</html>
