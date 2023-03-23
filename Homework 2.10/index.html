@@ -5,47 +5,10 @@
   <title>Проект "Комменты"</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-
-
 <body>
   <div class="container">
     <ul class="comments" id="list">
-      <li class="comment">
-        <div class="comment-header">
-          <div>Глеб Фокин</div>
-          <div>12.02.22 12:18</div>
-        </div>
-        <div class="comment-body">
-          <div class="comment-text">
-            Это будет первый комментарий на этой странице
-          </div>
-        </div>
-        <div class="comment-footer">
-          <div class="likes">
-            <span class="likes-counter">3</span>
-            <button id="like-button" class="like-button"></button>
-            <button id="delete-button" class="delete-button"></button>
-          </div>
-        </div>
-      </li>
-      <li class="comment">
-        <div class="comment-header">
-          <div>Варвара Н.</div>
-          <div>13.02.22 19:22</div>
-        </div>
-        <div class="comment-body">
-          <div class="comment-text">
-            Мне нравится как оформлена эта страница! ❤
-          </div>
-        </div>
-        <div class="comment-footer">
-          <div class="likes">
-            <span class="likes-counter">75</span>
-            <button id="like-button" class="like-button"></button>
-            <button id="delete-button" class="delete-button"></button>
-          </div>
-        </div>
-      </li>
+      <!-- Список рендериться из js-->
     </ul>
     <div class="add-form">
       <input id="name-input" type="text" class="add-form-name" placeholder="Введите ваше имя" />
@@ -64,81 +27,82 @@
 </style>
 <script>
 
-  // Код
-  // Функция даты
-  let myDate = new Date();
-  let year = myDate.getFullYear().toString().slice(-2);
-  let month = (myDate.getMonth() + 1);
-  let day = myDate.getDate();
-
-  let hour = myDate.getHours(); // получаем час из нашей даты
-  let minute = myDate.getMinutes(); // получаем минуты
-  let second = myDate.getSeconds(); // получаем секунды
-
-  if (minute < 10) { // если минут будет меньше 10,
-    minute = "0" + minute; // то перед ними поставим 0
-  }
-
-  if (hour < 10) { // если секунд будет меньше 10,
-    hour = "0" + hour;
-  }
-
-  if (day < 10) {
-    day = "0" + day;
-  }
-
-  if (month < 10) {
-    month = "0" + month;
-  }
-
-  let fullDate = day + "." + month + "." + year + " " + hour + ":" + minute;
-
-
-  // Находим элемент по его id
+  // Код писать здесь
   const buttonElement = document.getElementById('add-button');
   const listElement = document.getElementById("list");
   const nameInputElement = document.getElementById("name-input");
   const commentsInputElement = document.getElementById("comments-input");
 
-  // Обработчик событий
+  const comments = [
+    {
+      name: 'Глеб Фокин',
+      date: '12.02.22 12:18',
+      text: 'Это будет первый комментарий на этой странице',
+      likes: 3,
+      isLiked: false,
+    },
+    {
+      name: 'Варвара Н.',
+      date: '13.02.22 19:22',
+      text: 'Мне нравится как оформлена эта страница! ❤',
+      likes: 75,
+      isLiked: true,
+    },
+  ];
 
-  const initEventListeners = () => {
-    //Находим все элементы списка по классу
-    const likeElements = document.querySelectorAll(`.likes`);
-    // Проходим по коллекции циклом
-    for (const likeElement of likeElements) {
-      // Добавляем обработчик клика на каждый элемент
+  const clickLikeButton = () => {
+    // получаем все кнопки
+    const likeButtonsElements = document.querySelectorAll('.like-button');
 
-      const plus = likeElement.querySelector('.like-button');
-      const minus = likeElement.querySelector('.delete-button');
-      const counter_element = likeElement.querySelector('.likes-counter');
+    for (const likeButtonElement of likeButtonsElements) {
+      likeButtonElement.addEventListener('click', () => {
 
-      likeElement.addEventListener('click', () => {
- 
- 
-});
+        const index = likeButtonElement.dataset.index;
+        if (comments[index].isLiked === false) {
+          comments[index].isLiked = true;
+          comments[index].likes+=1;
+          // поставить лайк, то есть сменить значение свойства isLiked на true
+          // увеличить количество лайка на 1, то есть увеличить значение свойства likes на 1
+        } else if (comments[index].isLiked === true) {
+          comments[index].isLiked = false;
+          comments[index].likes-=1;
+          // обратная логика, меняем на ложь, вычитаем из свойства likes единицу
+        }
+        renderComments();
 
-      let counter = 0;
-
-      plus.addEventListener('click', () => {
-        render(++counter, counter_element);
-        likeElement.classList.add ("active-like");
-        
       });
-
-      minus.addEventListener('click', () => {
-        render(--counter, counter_element);
-        likeElement.classList.remove ("active-like");
-      });
-    };
-
-    const render = (counter, counter_element) => counter_element.innerText = counter;
-
+    }
   };
 
-  initEventListeners();
+  const renderComments = () => {
+    const commentsHTML = comments.map((comment, index) => {
+      return `<li id = "list-comment" class="comment">
+          <div class="comment-header">
+            <div>  ${comment.name} </div>
+            <div> ${comment.date}</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+              ${comment.text}
+            </div>
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">${comment.likes}</span>
+              <button data-index = '${index}' class="${comment.isLiked ? 'like-button -active-like' : 'like-button'
+        }"></button>
+            </div>
+          </div>
+        </li>`;
+    }).join('');
 
-  // Добавляем обработчик клика на кнопку "Написать"
+    listElement.innerHTML = commentsHTML;
+
+    clickLikeButton ();
+  };
+
+  renderComments();
+
   buttonElement.addEventListener("click", () => {
 
     nameInputElement.classList.remove('error');
@@ -150,30 +114,45 @@
       return;
     };
 
-    // Внутри обработчика клика добавляем новые элементы в список
-    const oldListHtml = listElement.innerHTML;
-    listElement.innerHTML = oldListHtml + `<li class="comment">
-          <div class="comment-header">
-            <div>  ${nameInputElement.value} </div>
-            <div> ${fullDate}</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              ${commentsInputElement.value}
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">0</span>
-              <button class="like-button"></button>
-              <button id= "delete-button" class="delete-button"></button>
-            </div>
-          </div>
-        </li>`;
+
+    let myDate = new Date();
+    let year = myDate.getFullYear().toString().slice(-2);
+    let month = (myDate.getMonth() + 1);
+    let day = myDate.getDate();
+
+    let hour = myDate.getHours(); // получаем час из нашей даты
+    let minute = myDate.getMinutes(); // получаем минуты
+    let second = myDate.getSeconds(); // получаем секунды
 
 
-    initEventListeners();
+    if (minute < 10) { // если минут будет меньше 10,
+      minute = "0" + minute; // то перед ними поставим 0
+    }
+    if (hour < 10) { // если секунд будет меньше 10,
+      hour = "0" + hour;
+    }
+    if (day < 10) {
+      day = "0" + day;
+    }
+    if (month < 10) {
+      month = "0" + month;
+    }
+    let fullDate = day + "." + month + "." + year + " " + hour + ":" + minute;
 
+
+    comments.push({
+      name: nameInputElement.value,
+      date: fullDate,
+      text: commentsInputElement.value,
+      likes: 0,
+      isLiked: false,
+    });
+
+    renderComments();
+    nameInputElement.value = '';
+    commentsInputElement.value = '';
   });
 
 </script>
+
+</html>
