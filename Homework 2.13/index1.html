@@ -81,9 +81,8 @@ method: "GET",
   comments = appComments;
   renderComments ();
 });
-
-
     }
+    fetchAndRenderComments ();
 
   const clickLikeButton = () => {
     const likeButtonsElements = document.querySelectorAll('.like-button');
@@ -150,7 +149,6 @@ method: "GET",
 
     clickLikeButton();
     clickComment();
-    fetchAndRenderComments ();
   };
 
   renderComments();
