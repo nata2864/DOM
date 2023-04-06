@@ -179,10 +179,8 @@
           return response;
         } else if (response.status === 400) {
           return alert("Имя и комментарий должны быть не короче 3 символов");
-        } else if (response.status === 500) {
-          return alert("Сервер сломался, попробуй позже");
-        }  else {
-          return alert( "Кажется, у вас сломался интернет, попробуйте позже" );
+        } else {
+          return alert("Сервер сломался, попробуй позже"); 
         }
       })
       .then((response) => {
@@ -205,7 +203,7 @@
       }).catch((error) => {
         buttonElement.disabled = false;
         buttonElement.textContent = "Написать";
-        
+        alert("Кажется, у вас сломался интернет, попробуйте позже");
         console.warn(error);
       });
     renderComments();
