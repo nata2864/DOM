@@ -80,23 +80,19 @@ method: "GET",
 
  let comments = [];
 
-  const clickLikeButton = () => {
-    // получаем все кнопки
+ const clickLikeButton = () => {
     const likeButtonsElements = document.querySelectorAll('.like-button');
 
     for (const likeButtonElement of likeButtonsElements) {
       likeButtonElement.addEventListener('click', () => {
         event.stopPropagation();
         const index = likeButtonElement.dataset.index;
-        if (comments[index].isLiked === false) {
-          comments[index].isLiked = true;
-          comments[index].likes += 1;
-          // поставить лайк, то есть сменить значение свойства isLiked на true
-          // увеличить количество лайка на 1, то есть увеличить значение свойства likes на 1
-        } else if (comments[index].isLiked === true) {
+        if (comments[index].isLiked) {
           comments[index].isLiked = false;
           comments[index].likes -= 1;
-          // обратная логика, меняем на ложь, вычитаем из свойства likes единицу
+        } else {
+          comments[index].isLiked = true;
+          comments[index].likes += 1;
         }
         renderComments();
 

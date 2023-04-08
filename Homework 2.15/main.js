@@ -5,9 +5,6 @@ const listElement = document.getElementById("list");
 const nameInputElement = document.getElementById("name-input");
 const commentsInputElement = document.getElementById("comments-input");
 
-
-
-
 const renderComments = () => {
   const commentsHTML = comments.map((comment, index) => {
     return `<li data-index = '${index}' id = "list-comment" class="comment">
@@ -30,19 +27,13 @@ const renderComments = () => {
       </li>`;
   }).join('');
 
-
-
-
   listElement.innerHTML = commentsHTML;
 
-
   const likeButtonsElements = document.querySelectorAll('.like-button');
-
 
   for (const likeButtonElement of likeButtonsElements) {
     likeButtonElement.addEventListener('click', (event) => {
       event.stopPropagation();
-
 
       const index = likeButtonElement.dataset.index;
       if (comments[index].isLiked) {
@@ -53,37 +44,28 @@ const renderComments = () => {
         comments[index].likes += 1;
       }
       renderComments();
-
-
     });
   }
+
   const comment = document.querySelectorAll('.comment');
- 
+
   for (const commentElement of comment) {
     commentElement.addEventListener('click', () => {
       const index = commentElement.dataset.index;
       commentsInputElement.value = `${comments[index].name}
 ${comments[index].text}`;
-renderComments();
+      renderComments();
     });
   }
-
-
 };
 
-
-renderComments ();
-
+renderComments();
 
 
-
-  buttonElement.addEventListener("click", () => {
-
+buttonElement.addEventListener("click", () => {
 
   nameInputElement.classList.remove('error');
   commentsInputElement.classList.remove('error');
- 
-
 
   if (nameInputElement.value === "" || commentsInputElement.value === "") {
     nameInputElement.classList.add('error');
@@ -91,28 +73,13 @@ renderComments ();
     return;
   }
 
-
-
-
- 
-let myDate = new Date();
+  
+  let myDate = new Date();
   let year = myDate.getFullYear().toString().slice(-2);
   let month = (myDate.getMonth() + 1);
   let day = myDate.getDate();
-
-
-
-
   let hour = myDate.getHours(); // получаем час из нашей даты
   let minute = myDate.getMinutes(); // получаем минуты
-
-
-
-
-
-
-
-
 
   if (minute < 10) { // если минут будет меньше 10,
     minute = "0" + minute; // то перед ними поставим 0
@@ -128,36 +95,25 @@ let myDate = new Date();
   }
   let fullDate = day + "." + month + "." + year + " " + hour + ":" + minute;
 
-
-
-
-
-
-
-
   comments.push({
     name: nameInputElement.value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;"),
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;"),
     date: fullDate,
     text: commentsInputElement.value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;"),
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;"),
     likes: 0,
     isLiked: false,
   });
 
-
-
-
   renderComments();
   nameInputElement.value = '';
   commentsInputElement.value = '';
-
 
 });
 

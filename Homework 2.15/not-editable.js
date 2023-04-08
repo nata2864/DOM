@@ -25,56 +25,8 @@ const renderComments = () => {
       </li>`;
   }).join('');
  
- 
- 
- 
   listElement.innerHTML = commentsHTML;
 
-    // const likeButtonsElements = document.querySelectorAll('.like-button');
-    // for (const likeButtonElement of likeButtonsElements) {
-    //     likeButtonElement.addEventListener('click', () => {
-    //       event.stopPropagation();
-    //       const index = likeButtonElement.dataset.index;
-    //       if (comments[index].isLiked) {
-    //         comments[index].isLiked = false;
-    //         comments[index].likes -= 1;
-    //       } else {
-    //         comments[index].isLiked = true;
-    //         comments[index].likes += 1;
-    //       };
-    //     });
-    // };
-
-    // const comment = document.querySelectorAll('.comment');
-    // // const nameInputElement = document.getElementById("name-input");
-    // // const commentsInputElement = document.getElementById("comments-input");
-
-    // for (const commentElement of comment) {
-    //    commentElement.addEventListener('click', () => {
-    //      const index = commentElement.dataset.index;
-    //       commentsInputElement.value = `${comments[index].name}
-    //       ${comments[index].text}`;
-    //       renderComments();
-    //     });
-    //    };
-    
-    // const buttonElement = document.getElementById('add-button');
-
-    // buttonElement.addEventListener("click", () => {
-    //     nameInputElement.classList.remove('error');
-    //     commentsInputElement.classList.remove('error');
-    
-    //     if (nameInputElement.value === "" || commentsInputElement.value === "") {
-    //       nameInputElement.classList.add('error');
-    //       commentsInputElement.classList.add('error');
-    //       return;
-    //     };
-    
-    
-    //     buttonElement.disabled = true;
-    //     buttonElement.textContent = "Элемент добавлятся...";
-        
-    // });
 };
 
 renderComments();
